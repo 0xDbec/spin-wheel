@@ -1,29 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Wheel Test</title>
   <style>
-    body { margin:0; display:flex; justify-content:center; align-items:center; height:100vh; }
-    canvas { background:none; } /* transparent around the circle */
+    body {
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: transparent;
+    }
+    canvas {
+      background: none; /* only the wheel is drawn */
+    }
   </style>
-  <!-- load Winwheel from CDN -->
+
+  <!-- 1) THIS MUST BE HERE and must be exactly this URL -->
   <script src="https://cdn.jsdelivr.net/npm/winwheel@2.7.0/Winwheel.min.js"></script>
 </head>
 <body>
   <canvas id="canvas" width="400" height="400"></canvas>
+
   <script>
-    // Basic wheel with 3 colors
-    new Winwheel({
+    // 2) A simple 3-slice wheel, spins on load
+    const testWheel = new Winwheel({
       canvasId: 'canvas',
       numSegments: 3,
       segments: [
         { fillStyle: '#f00', text: 'One' },
         { fillStyle: '#0f0', text: 'Two' },
-        { fillStyle: '#00f', text: 'Three' }
-      ],
-      animation: { type: 'spinToStop', duration: 3, spins: 5 }
-    }).startAnimation();
-  </script>
-</body>
-</html>
+        { fillStyle
