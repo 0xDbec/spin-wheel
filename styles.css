@@ -1,20 +1,98 @@
-body {
+/* --------------- Pop-up modal at 24% of viewport width --------------- */
+.wheel-wrapper {
+  position: fixed;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 24vw;                 /* exactly 24% of the page width */
+  max-width: 400px;            /* optional cap if you like */
+  background: transparent;
+  z-index: 1000;
+  transition: all 0.5s ease;
+}
+
+/* Hide overflow when collapsed */
+.wheel-wrapper.collapsed {
+  overflow: hidden;
+}
+
+/* Header */
+.wheel-header {
+  text-transform: uppercase;
+  font-size: 1.2rem;
+  letter-spacing: 2px;
+  color: #fff;
   text-align: center;
-  font-family: sans-serif;
-  padding: 20px;
+  margin-bottom: 10px;
 }
-canvas {
-  margin: 20px auto;
-  border: 5px solid #333;
-  border-radius: 50%;
+
+/* Wheel + logo container */
+.wheel-container {
+  position: relative;
 }
-button {
-  margin: 10px;
-  padding: 12px 24px;
-  font-size: 16px;
+
+/* Transparent canvas background */
+#canvas {
+  background: none;
+  display: block;
+  margin: 0 auto;
+}
+
+/* Logo sits dead-center of the wheel */
+#wheel-logo {
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 40%;                  /* adjust so it fits nicely */
+  height: auto;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* Controls under the wheel */
+.controls {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.controls button {
+  border: none;
+  border-radius: 999px;
+  padding: 8px 16px;
+  font-size: 0.9rem;
   cursor: pointer;
 }
-button:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
+
+#connect-btn { background: #FF4081; color: #fff; }
+#spin-btn    { background: #40C4FF; color: #fff; }
+#spin-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* --------------- Collapsed tab in top-right --------------- */
+.wheel-tab {
+  display: none;               /* hidden until we collapse */
+  position: fixed;
+  top: 10px; right: 10px;
+  width: 50px; height: 50px;
+  background: url('logo.png') center/contain no-repeat;
+  cursor: pointer;
+  z-index: 1001;
+  transition: all 0.3s ease;
+}
+
+/* When the wrapper gets .collapsed: hide everything but the logo */
+.wheel-wrapper.collapsed #canvas,
+.wheel-wrapper.collapsed .wheel-header,
+.wheel-wrapper.collapsed .controls {
+  display: none;
+}
+
+/* Shrink & move the wrapper itself into a little square */
+.wheel-wrapper.collapsed {
+  width: 50px;
+  height: 50px;
+  top: 10px;
+  left: auto;
+  right: 10px;
+  transform: none;
 }
