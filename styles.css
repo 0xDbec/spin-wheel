@@ -2,21 +2,18 @@ html, body {
   margin:0;
   padding:0;
   background:transparent;
-  color:#fff;
-  font-family:sans-serif;
 }
 
-/* Centered modal at 24% width */
 .wheel-wrapper {
   position:fixed;
   top:50%; left:50%;
   transform:translate(-50%,-50%);
   width:24vw;
   max-width:400px;
+  background: transparent;
   transition:0.5s all;
 }
 
-/* Header */
 .wheel-header {
   text-transform:uppercase;
   font-size:1.2rem;
@@ -25,30 +22,29 @@ html, body {
   margin-bottom:10px;
 }
 
-/* Wheel + logo container */
-.wheel-container {
-  position:relative;
-}
+.wheel-container { position:relative; }
 #canvas {
-  background:none;
   display:block;
   margin:0 auto;
+  background: none;
 }
+
 #wheel-logo {
   position:absolute;
   top:50%; left:50%;
-  width:40%;
+  width:20px;     /* shrunk down */
+  height:20px;
   transform:translate(-50%,-50%);
   pointer-events:none;
 }
 
-/* Controls */
 .controls {
   display:flex;
   justify-content:center;
   gap:8px;
   margin-top:10px;
 }
+
 .controls button {
   border:none;
   border-radius:999px;
@@ -56,6 +52,7 @@ html, body {
   font-size:0.9rem;
   cursor:pointer;
 }
+
 #connect-btn { background:#FF4081; color:#fff; }
 #spin-btn    { background:#40C4FF; color:#fff; }
 #spin-btn:disabled { opacity:0.5; cursor:not-allowed; }
