@@ -1,34 +1,43 @@
-let hasWallet = false, hasFollowed = false, isSpinning = false;
+let hasWallet=false,hasFollowed=false,isSpinning=false;
 
-// your COLORS & wheel setup go here (unchanged)...
+// Your colors/weights here
+const wheel = new Winwheel({
+  canvasId:'canvas',
+  numSegments:7,
+  segments:[
+    {fillStyle:'#7044FF',text:'300 points',weight:70},
+    {fillStyle:'#00FFD8',text:'500 points',weight:50},
+    {fillStyle:'#FFD500',text:'1000 points',weight:20},
+    {fillStyle:'#E040FB',text:'Mystery box ❓',weight:0.5},
+    {fillStyle:'#FFEA00',text:'Golden 🎫',weight:0.1},
+    {fillStyle:'#2E7D32',text:'$100 in SOL',weight:0},
+    {fillStyle:'#757575',text:'Try again!',weight:15}
+  ],
+  animation:{type:'spinToStop',duration:5,spins:8,callbackFinished:notifyResult}
+});
 
-// (1) Spin finished → show result, then collapse
-function notifyResult(segment) {
-  isSpinning = false;
-  alert(`🎉 You won: ${segment.text}!`);
+twttr.widgets.createFollowButton('YourTwitterHandle',document.getElementById('twitter-btn'),{size:'large'})
+  .then(el=>el.addEventListener('click',()=>{hasFollowed=true;checkGates();}));
 
-  // collapse the wheel
-  const wrapper = document.getElementById('wheel-wrapper');
-  wrapper.classList.add('collapsed');
+const web3Modal=new Web3Modal.default();
+document.getElementById('connect-btn').onclick=async()=>{
+  try{await web3Modal.connect();hasWallet=true;checkGates();}
+  catch(e){console.error(e);}
+};
 
-  // if you’d rather use the separate tab instead:
-  // wrapper.style.display = 'none';
-  // document.getElementById('wheel-tab').style.display = 'block';
+function checkGates(){
+  document.getElementById('spin-btn').disabled=!(hasWallet&&hasFollowed);
 }
 
-// (2) Allow clicking the tiny logo to re-open
-document.getElementById('wheel-logo')
-  .addEventListener('click', () => {
-    const wrapper = document.getElementById('wheel-wrapper');
-    if (wrapper.classList.contains('collapsed')) {
-      wrapper.classList.remove('collapsed');
-    }
-  });
+document.getElementById('spin-btn').onclick=()=>{
+  if(isSpinning) return;
+  isSpinning=true;
+  wheel.startAnimation();
+};
 
-// (3) Or if you used the separate tab approach:
-document.getElementById('wheel-tab')
-  .addEventListener('click', () => {
-    document.getElementById('wheel-wrapper').classList.remove('collapsed');
-  });
-
-// …the rest of your wallet/Twitter logic, spin-once handler, etc. …
+function notifyResult(segment){
+  isSpinning=false;
+  alert(`🎉 You won: ${segment.text}!`);
+  // collapse logic (re-enable once you confirm it all works)
+  // document.getElementById('wheel-wrapper').classList.add('collapsed');
+}
