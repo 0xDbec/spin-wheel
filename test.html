@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Wheel Test</title>
+  <style>
+    body { margin:0; display:flex; justify-content:center; align-items:center; height:100vh; }
+    canvas { background:none; } /* transparent around the circle */
+  </style>
+  <!-- load Winwheel from CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/winwheel@2.7.0/Winwheel.min.js"></script>
+</head>
+<body>
+  <canvas id="canvas" width="400" height="400"></canvas>
+  <script>
+    // Basic wheel with 3 colors
+    new Winwheel({
+      canvasId: 'canvas',
+      numSegments: 3,
+      segments: [
+        { fillStyle: '#f00', text: 'One' },
+        { fillStyle: '#0f0', text: 'Two' },
+        { fillStyle: '#00f', text: 'Three' }
+      ],
+      animation: { type: 'spinToStop', duration: 3, spins: 5 }
+    }).startAnimation();
+  </script>
+</body>
+</html>
